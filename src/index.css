@@ -1,0 +1,17 @@
+/* Reset mínimo global. O reset completo (tipografia, cores, `body`) já
+   vem de src/site/site.css, importado por Home.jsx — aqui ficam só os
+   ajustes que não pertencem à identidade visual do site em si. */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#root {
+  width: 100%;
+}

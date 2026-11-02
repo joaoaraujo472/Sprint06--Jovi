@@ -1,0 +1,727 @@
+/* ===========================================================
+   JOVI — nova interface do site institucional.
+   Paleta construída a partir do azul real da marca Jovi (#2346DB),
+   seções alternando entre tons claros e o azul/tinta da marca,
+   cards sólidos (sem vidro/transparência) e tipografia legível.
+   =========================================================== */
+
+:root {
+    /* --- marca --- */
+    --marca:        #2346db;   /* azul extraído da logo real da Jovi */
+    --marca-forte:  #17309e;   /* azul mais profundo, pra gradientes e fundo hero */
+    --marca-clara:  #7c93ff;   /* azul claro, detalhes e hover */
+
+    /* --- tinta (seções escuras) --- */
+    --tinta:        #0d1130;
+    --tinta-2:      #161b45;
+    --tinta-linha:  #2c3266;
+
+    /* --- papel (seções claras) --- */
+    --papel:        #ffffff;
+    --papel-nevoa:  #eef1fc;
+    --linha:        #dde2f4;
+
+    /* --- texto --- */
+    --texto-escuro:      #10132b;
+    --texto-escuro-fraco: #4a5078;
+    --texto-claro:        #f4f6ff;
+    --texto-claro-fraco:  #b9c1ec;
+
+    --verde-ok: #1fae6a;
+
+    /* --- espectro dos modos — copiado 1:1 do app real --- */
+    --automatico: linear-gradient(135deg, #2b7cff, #3b52ff);
+    --retrato:    linear-gradient(135deg, #9b4dff, #c25fff);
+    --paisagem:   linear-gradient(135deg, #00b95f, #00d26d);
+    --noturno:    linear-gradient(135deg, #4a49d9, #7271ff);
+    --comida:     linear-gradient(135deg, #ff7a00, #ff9f43);
+    --macro:      linear-gradient(135deg, #ff2f92, #ff5eb2);
+    --acao:       linear-gradient(135deg, #ff2d3f, #ff5967);
+    --estudante:  linear-gradient(135deg, #00b8d9, #007cf0);
+    --documento:  linear-gradient(135deg, #f7971e, #ffd200);
+
+    --automatico-solid: #3159ff;
+    --retrato-solid:    #a855f7;
+    --paisagem-solid:   #00a85a;
+    --noturno-solid:    #5b5aeb;
+    --comida-solid:     #ff8a1f;
+    --macro-solid:      #ff3fa0;
+    --acao-solid:       #ff3b4d;
+    --estudante-solid:  #0098c9;
+    --documento-solid:  #f2a90e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    background: var(--papel);
+    color: var(--texto-escuro);
+    line-height: 1.7;
+}
+
+h1, h2 {
+    font-family: 'Abril Fatface', serif;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+
+/* Abril Fatface é ótima pra título grande, mas fica difícil de ler em
+   tamanho pequeno — títulos de card/etapa usam Lato bem forte no lugar */
+h3 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    line-height: 1.3;
+    letter-spacing: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+code { font-family: 'Lato', monospace; font-weight: 700; }
+
+.pular-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--marca);
+    color: white;
+    padding: 12px 18px;
+    font-weight: 700;
+    z-index: 100;
+}
+.pular-link:focus { left: 12px; top: 12px; }
+
+:focus-visible {
+    outline: 3px solid var(--marca-clara);
+    outline-offset: 3px;
+}
+
+.container {
+    width: min(1180px, 90%);
+    margin: 0 auto;
+}
+
+/* ---------- LOGO (marca real da Jovi) ---------- */
+
+.marca-lockup {
+    display: block;
+    height: 42px;
+    width: auto;
+}
+
+.marca-lockup rect { fill: var(--marca); }
+
+/* ---------- CABEÇALHO ---------- */
+
+.cabecalho {
+    height: 80px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--linha);
+}
+
+.navegacao {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marca { display: flex; align-items: center; }
+
+.menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px 22px;
+    color: var(--texto-escuro-fraco);
+    font-size: 0.94rem;
+    font-weight: 600;
+}
+
+.menu a:hover { color: var(--marca); }
+
+.menu-cta {
+    background: var(--marca);
+    color: white !important;
+    padding: 11px 20px;
+    border-radius: 12px;
+}
+.menu-cta:hover { background: var(--marca-forte); color: white !important; }
+
+.botao-menu {
+    display: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+}
+.botao-menu span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 5px 0;
+    border-radius: 2px;
+    background: var(--texto-escuro);
+}
+
+/* ---------- BOTÕES ---------- */
+
+.botao {
+    display: inline-block;
+    border: 0;
+    border-radius: 12px;
+    padding: 16px 28px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
+}
+.botao:hover { transform: translateY(-2px); }
+
+.botao-primario {
+    background: white;
+    color: var(--marca-forte);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+.botao-primario:hover { background: #eef1ff; }
+
+/* botão usado fora do hero, sobre fundo claro */
+.secao .botao-primario {
+    background: var(--marca);
+    color: white;
+    box-shadow: 0 10px 24px rgba(35,70,219,0.28);
+}
+.secao .botao-primario:hover { background: var(--marca-forte); }
+
+/* ---------- MOCKUPS DE CELULAR (screenshots reais) ---------- */
+
+.celular {
+    border-radius: 30px;
+    border: 7px solid #10132b;
+    background: #000;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(4, 8, 30, 0.45);
+}
+
+.celular img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+/* ---------- HERO — fundo azul da marca ---------- */
+
+.hero {
+    padding: 168px 0 110px;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--marca) 0%, var(--marca-forte) 65%, #0f1c72 100%);
+    color: var(--texto-claro);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--texto-claro);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.28);
+    padding: 8px 18px 8px 8px;
+    border-radius: 24px;
+    margin-bottom: 26px;
+}
+
+.hero-tag-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: white;
+    color: var(--marca-forte);
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 0.95rem;
+}
+
+.hero-texto h1 {
+    font-size: clamp(2.5rem, 4.4vw, 3.7rem);
+    max-width: 640px;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.hero-texto > p {
+    color: var(--texto-claro-fraco);
+    max-width: 540px;
+    font-size: 1.18rem;
+    margin-bottom: 0;
+}
+
+.hero-visual {
+    position: relative;
+    height: 500px;
+    justify-self: center;
+    width: 100%;
+    animation: surgir 0.7s ease both;
+}
+
+@keyframes surgir {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.celular-frente,
+.celular-tras {
+    position: absolute;
+    width: 236px;
+    top: 0;
+}
+
+.celular-frente {
+    left: 50%;
+    transform: translateX(-62%);
+    z-index: 2;
+}
+
+.celular-tras {
+    left: 50%;
+    top: 46px;
+    transform: translateX(-8%) scale(0.94);
+    z-index: 1;
+    opacity: 0.85;
+}
+
+/* ---------- SEÇÕES GERAIS ---------- */
+
+.secao { padding: 108px 0; }
+
+/* seções claras alternam entre branco e névoa azulada — dá ritmo sem pesar */
+.secao-alt { background: var(--papel-nevoa); }
+
+/* seções escuras usam a tinta da marca, como o app de verdade */
+.secao-tinta {
+    background: var(--tinta);
+    color: var(--texto-claro);
+}
+
+.titulo-secao-simples {
+    font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+    max-width: 640px;
+    margin-bottom: 16px;
+}
+
+.subtitulo-secao {
+    color: var(--texto-escuro-fraco);
+    max-width: 600px;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+}
+
+.secao-tinta .subtitulo-secao { color: var(--texto-claro-fraco); }
+
+/* ---------- HISTÓRIA ---------- */
+
+.historia-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.historia-texto h2 { font-size: clamp(1.9rem, 3.2vw, 2.5rem); margin-bottom: 24px; max-width: 500px; }
+.historia-texto p { color: var(--texto-escuro-fraco); max-width: 62ch; margin-bottom: 18px; font-size: 1.08rem; }
+.historia-texto em { color: var(--texto-escuro); font-style: normal; font-weight: 700; }
+
+.dica-citacao {
+    background: var(--marca);
+    border-radius: 20px;
+    padding: 32px 28px;
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.6;
+    color: white;
+    align-self: center;
+    box-shadow: 0 20px 40px rgba(35,70,219,0.22);
+}
+
+/* ---------- COMO FUNCIONA ---------- */
+
+.passos {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+}
+
+.passo { position: relative; }
+
+.passo-numero {
+    position: absolute;
+    top: -16px;
+    right: -8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--marca);
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 3;
+    box-shadow: 0 6px 14px rgba(35,70,219,0.35);
+}
+
+.celular-passo {
+    width: 100%;
+    aspect-ratio: 9 / 12;
+    margin-bottom: 20px;
+    border-radius: 22px;
+}
+
+.passo h3 { font-size: 1.15rem; margin-bottom: 10px; }
+.passo p { color: var(--texto-escuro-fraco); font-size: 0.98rem; }
+
+/* ---------- GALERIA DE MODOS (cards sólidos e vivos) ---------- */
+
+.galeria-mosaico {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 150px;
+    grid-auto-flow: dense;
+    gap: 18px;
+}
+
+.modo-tile {
+    position: relative;
+    grid-column: span 1;
+    grid-row: span 2;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--cor-modo-fundo, var(--tinta));
+    box-shadow: 0 14px 34px rgba(10, 14, 40, 0.22);
+}
+
+/* card grande: ocupa 2 colunas x 2 linhas, vira o destaque do mosaico */
+.tile-grande { grid-column: span 2; grid-row: span 2; }
+
+/* card alto: fica estreito mas mais alto, encaixando nos buracos que o grid-auto-flow: dense preenche sozinho */
+.tile-alta { grid-column: span 1; grid-row: span 3; }
+
+.modo-tile img {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 60%;
+    width: auto;
+    max-width: calc(100% - 28px);
+    object-fit: contain;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+    transition: transform 0.35s ease;
+}
+
+.modo-tile:hover img { transform: translateX(-50%) scale(1.035); }
+
+.modo-tile-info {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 16px 18px 18px;
+    background: rgba(9, 11, 28, 0.86);
+    backdrop-filter: blur(2px);
+}
+
+.modo-tile-info h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0;
+    color: white;
+}
+
+.modo-tile-dica {
+    font-size: 0.98rem;
+    line-height: 1.45;
+    color: #dfe3ff;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.35s ease, margin 0.35s ease;
+}
+
+.modo-tile:hover .modo-tile-dica,
+.modo-tile:focus-within .modo-tile-dica {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 8px;
+}
+
+/* a partir daqui a gente controla a posição de cada card no grid na mão
+   (linhas de coluna/linha), pra formar um mosaico que se encaixa sem
+   nenhum buraco — só faz sentido com os 4 colunas do desktop */
+@media (min-width: 981px) {
+    .modo-tile:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; } /* Automático — grande */
+    .modo-tile:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 4; } /* Retrato — alto */
+    .modo-tile:nth-child(3) { grid-column: 4 / 5; grid-row: 1 / 3; } /* Paisagem */
+    .modo-tile:nth-child(4) { grid-column: 4 / 5; grid-row: 3 / 5; } /* Noturno */
+    .modo-tile:nth-child(5) { grid-column: 1 / 2; grid-row: 5 / 7; } /* Comida */
+    .modo-tile:nth-child(6) { grid-column: 1 / 3; grid-row: 3 / 5; } /* Super Perto — grande */
+    .modo-tile:nth-child(7) { grid-column: 2 / 3; grid-row: 5 / 7; } /* Ação */
+    .modo-tile:nth-child(8) { grid-column: 3 / 4; grid-row: 4 / 7; } /* Estudante — alto */
+    .modo-tile:nth-child(9) { grid-column: 4 / 5; grid-row: 5 / 7; } /* Documento */
+}
+
+/* ---------- BASTIDORES (fundo tinta, igual ao app) ---------- */
+
+.bastidores-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+
+.bastidores-grid h2 { font-size: clamp(1.9rem, 3.2vw, 2.5rem); margin-bottom: 20px; }
+.bastidores-grid p { color: var(--texto-claro-fraco); margin-bottom: 16px; max-width: 52ch; font-size: 1.06rem; }
+
+.pilhas-tech {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+
+.pilhas-tech li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--tinta-2);
+    border: 1px solid var(--tinta-linha);
+    border-radius: 12px;
+}
+
+.pilhas-tech code {
+    color: #9fc1ff;
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+.pilhas-tech span {
+    color: var(--texto-claro-fraco);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+/* ---------- EQUIPE ---------- */
+
+.equipe-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.integrante {
+    padding: 30px 18px;
+    border-radius: 18px;
+    background: var(--papel);
+    border: 1px solid var(--linha);
+    text-align: center;
+    box-shadow: 0 10px 26px rgba(15, 20, 60, 0.06);
+}
+
+.integrante-avatar {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+    border-radius: 16px;
+    background: var(--cor-avatar);
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.integrante h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.integrante-rm { color: var(--texto-escuro-fraco); font-size: 0.85rem; font-weight: 600; }
+.integrante p { color: var(--texto-escuro-fraco); font-size: 0.92rem; margin-top: 12px; }
+
+/* ---------- CONTATO ---------- */
+
+.contato-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 64px;
+}
+
+.contato-grid h2 { font-size: clamp(1.9rem, 3.2vw, 2.5rem); margin-bottom: 18px; }
+.contato-grid > div > p { color: var(--texto-escuro-fraco); margin-bottom: 24px; max-width: 44ch; font-size: 1.06rem; }
+
+address {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-style: normal;
+    color: var(--texto-escuro-fraco);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+form {
+    display: grid;
+    gap: 8px;
+    padding: 32px;
+    border-radius: 20px;
+    background: var(--papel);
+    border: 1px solid var(--linha);
+    box-shadow: 0 20px 46px rgba(15, 20, 60, 0.08);
+}
+
+form label { font-size: 0.92rem; font-weight: 700; color: var(--texto-escuro); margin-top: 8px; }
+
+form input, form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--linha);
+    border-radius: 10px;
+    outline: none;
+    background: var(--papel-nevoa);
+    color: var(--texto-escuro);
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+}
+
+form input::placeholder, form textarea::placeholder { color: #8890b8; }
+
+form input:focus, form textarea:focus { border-color: var(--marca); background: white; }
+
+form button { margin-top: 12px; width: 100%; }
+
+.confirmacao { color: var(--verde-ok); text-align: center; font-size: 0.95rem; font-weight: 700; min-height: 1.4em; }
+
+/* ---------- RODAPÉ ---------- */
+
+.rodape { padding: 40px 0; background: var(--tinta); color: var(--texto-claro-fraco); }
+
+.rodape-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.rodape p { font-size: 0.95rem; }
+
+/* ===================== RESPONSIVO ===================== */
+
+@media (max-width: 980px) {
+    .hero-grid, .historia-grid, .bastidores-grid, .contato-grid {
+        grid-template-columns: 1fr;
+    }
+    .hero-visual { height: 360px; margin-top: 24px; }
+    .celular-frente, .celular-tras { width: 200px; }
+    .celular-tras { top: 38px; }
+    .passos { grid-template-columns: repeat(2, 1fr); }
+    .galeria-mosaico { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+    .tile-grande { grid-column: span 2; grid-row: span 2; }
+    .tile-alta { grid-column: span 1; grid-row: span 2; }
+    .equipe-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+    .botao-menu { display: block; }
+
+    .menu {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 5%;
+        width: 90%;
+        padding: 18px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        border: 1px solid var(--linha);
+        border-radius: 14px;
+        background: white;
+        box-shadow: 0 20px 40px rgba(15,20,60,0.14);
+    }
+    .menu.aberto { display: flex; }
+    .menu a { display: block; padding: 12px 8px; width: 100%; color: var(--texto-escuro); }
+    .menu-cta { margin-top: 8px; text-align: center; }
+
+    .hero { padding: 140px 0 72px; }
+    .hero-acoes { flex-direction: column; }
+    .hero-acoes .botao { text-align: center; }
+
+    .secao { padding: 76px 0; }
+
+    .passos { grid-template-columns: 1fr; }
+    .passo-numero { top: -10px; }
+
+    .galeria-mosaico { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
+    .tile-alta { grid-row: span 2; }
+    .modo-tile-info h3 { font-size: 1rem; }
+    .modo-tile-dica { font-size: 0.88rem; }
+
+    .equipe-grid { grid-template-columns: 1fr 1fr; }
+
+    .rodape-grid { flex-direction: column; text-align: center; }
+}
+
+/* ---------- CTA do hero + app embutido ("Experimente agora") ---------- */
+
+.hero-cta {
+    margin-top: 30px;
+}
+
+.experimente-grid {
+    align-items: center;
+}
+
+.celular-vivo {
+    justify-self: center;
+    width: 100%;
+    max-width: 390px;
+    border-width: 10px;
+    /* o app React (#app-container) já define sua própria altura/tema
+       escuro internamente — este mockup só serve como moldura. */
+    padding: 0;
+}
+
+.celular-vivo #app-container {
+    width: 100%;
+    max-width: none;
+    height: 700px;
+    border: none;
+    border-radius: 0;
+}
