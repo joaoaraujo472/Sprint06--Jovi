@@ -97,8 +97,8 @@ equipe antes da entrega.
 
 ## Links
 
-- **Repositório GitHub:** `[cole aqui o link do repositório]`
-- **Deploy na Vercel:** `[cole aqui o link do deploy]`
+- **Repositório GitHub:** `https://github.com/joaoaraujo472/Sprint06--Jovi`
+- **Deploy na Vercel:** `https://sprint06-jovi-liart.vercel.app`
 
 > Para publicar: crie um repositório no GitHub, suba este projeto (`git init`,
 > `git add .`, `git commit`, `git push`), depois importe o repositório em
